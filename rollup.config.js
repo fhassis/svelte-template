@@ -4,7 +4,8 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
-import scss from 'rollup-plugin-scss';
+import postcss from 'rollup-plugin-postcss';
+import purgecss from '@fullhuman/postcss-purgecss';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -32,7 +33,7 @@ function serve() {
 export default {
 	input: 'src/main.ts',
 	output: {
-		sourcemap: true,
+		sourcemap: !production,
 		format: 'iife',
 		name: 'app',
 		file: 'public/build/bundle.js',
@@ -45,10 +46,18 @@ export default {
 				dev: !production,
 			},
 		}),
-		scss({ 
-			output: 'public/build/bundle.css',
-			failOnError: true,
-			outputStyle: "compressed",
+		postcss({ 
+			extract: 'bundle.css',
+			minimize: production,
+			sourceMap: !production,
+			plugins: production && [
+				purgecss({
+					content: [
+						'./src/**/*.svelte',
+						'./node_modules/svelte/*.js',
+					],
+				}),
+			]
 		}),
 
 		// If you have external dependencies installed from
@@ -66,12 +75,10 @@ export default {
 			inlineSources: !production,
 		}),
 
-		// In dev mode, call `npm run start` once
-		// the bundle has been generated
+		// In dev mode, call `npm run start` once the bundle has been generated
 		!production && serve(),
 
-		// Watch the `public` directory and refresh the
-		// browser on changes when not in production
+		// Watch the `public` directory and refresh the browser on changes when not in production
 		!production && livereload('public'),
 
 		// If we're building for production (npm run build
