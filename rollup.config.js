@@ -6,6 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import purgecss from '@fullhuman/postcss-purgecss';
+import cleaner from 'rollup-plugin-cleaner';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -74,6 +75,7 @@ export default {
 			sourceMap: !production,
 			inlineSources: !production,
 		}),
+		cleaner({ targets: ['public/build'] }),
 
 		// In dev mode, call `npm run start` once the bundle has been generated
 		!production && serve(),
