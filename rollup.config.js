@@ -4,9 +4,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
-import purgecss from '@fullhuman/postcss-purgecss';
-import cleaner from 'rollup-plugin-cleaner';
+import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -47,19 +45,9 @@ export default {
 				dev: !production,
 			},
 		}),
-		postcss({ 
-			extract: 'bundle.css',
-			minimize: production,
-			sourceMap: !production,
-			plugins: production && [
-				purgecss({
-					content: [
-						'./src/**/*.svelte',
-						'./node_modules/svelte/*.js',
-					],
-				}),
-			]
-		}),
+		// we'll extract any component CSS out into
+		// a separate file - better for performance
+		css({ output: 'bundle.css' }),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -75,7 +63,6 @@ export default {
 			sourceMap: !production,
 			inlineSources: !production,
 		}),
-		cleaner({ targets: ['public/build'] }),
 
 		// In dev mode, call `npm run start` once the bundle has been generated
 		!production && serve(),
