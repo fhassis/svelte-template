@@ -1,13 +1,18 @@
 {
   "name": "svelte-app",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev:app": "rollup -c -w",
+    "build:app": "rollup -c",
+    "dev:bulma": "sass --no-source-map --style=compressed src/bulma.scss public/build/bulma.css --watch",
+    "build:bulma": "sass --no-source-map --style=compressed src/bulma.scss public/build/bulma.full.css",
+    "purge:bulma": "purgecss -css public/build/bulma.full.css -o public/build/bulma.css --content src/**/*.svelte node_modules/svelte/*.js",
+    "clean:bulma": "del-cli public/build/bulma.full.css",
+    "clean:all": "del-cli --force public/build",
+    "build": "npm-run-all clean:all build:bulma purge:bulma clean:bulma build:app",
+    "dev": "npm-run-all --parallel dev:*",
     "start": "sirv public",
-    "validate": "svelte-check",
-    "bulma-build": "sass --no-source-map --style=compressed src/bulma.scss src/bulma.css",
-    "bulma-purge": "purgecss -css src/bulma.css -o public/bulma.css --content src/**/*.svelte node_modules/svelte/*.js"
+    "validate": "svelte-check"
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^3.1.3",
@@ -16,6 +21,8 @@
     "@rollup/plugin-typescript": "^8.1.0",
     "@tsconfig/svelte": "^1.0.10",
     "bulma": "^0.9.1",
+    "del-cli": "^3.0.1",
+    "npm-run-all": "^4.1.5",
     "purgecss": "^3.1.3",
     "rollup": "^2.35.1",
     "rollup-plugin-cleaner": "^1.0.0",
