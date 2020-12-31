@@ -5,6 +5,8 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 import css from 'rollup-plugin-css-only';
+import postcss from 'rollup-plugin-postcss';
+import purgecss from '@fullhuman/postcss-purgecss';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -48,6 +50,22 @@ export default {
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
+
+		// compile .sass and .scss dependency files
+		postcss({ 
+			extract: 'imported.css',
+			minimize: production,
+			sourceMap: !production,
+			plugins: production && [
+				purgecss({
+					content: [
+						'./src/**/*.svelte',
+						'./node_modules/svelte/*.js',
+					],
+				}),
+			],
+			extensions: ['.sass', '.scss']
+		}),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In

@@ -5,10 +5,9 @@ This is a project template for [Svelte](https://svelte.dev) apps. It lives at ht
 The main differences from the default Svelte template are:
 - Enabled Typescript by default
 - CSS generation with PostCSS
-    - Generation of map files in development
-    - Minification with cssnano in production
-    - PurgeCSS in production.
-    - Possibility to import Sass implementations of frameworks like Bulma and others.
+    - Generation of map files (in development)
+    - Minification with cssnano (in production).
+    - Bulma framework minified with PurgeCSS (in production).
 
 To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
 
