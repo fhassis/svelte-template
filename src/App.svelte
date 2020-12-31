@@ -1,6 +1,12 @@
 <script lang="ts">
-	import './styles/bulma.scss';
+	import './styles/my-bulma.scss';
 </script>
+
+<style>
+	h2 {
+		color:blue;
+	}
+</style>
 
 <section class="section">
    <div class="container">
@@ -23,5 +29,6 @@
 		   Advertencia
 		   </button>
 	   </p>
+	   <h2>Subtitle</h2>
    </div>
 </section>

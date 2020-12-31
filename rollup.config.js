@@ -56,8 +56,8 @@ export default {
 			extract: 'imported.css',
 			minimize: production,
 			sourceMap: !production,
-			plugins: production && [
-				purgecss({
+			plugins: [
+				production && purgecss({
 					content: ['./src/**/*.svelte'],
 					whitelist: ['body'] 
 				}),
