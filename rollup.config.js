@@ -58,10 +58,8 @@ export default {
 			sourceMap: !production,
 			plugins: production && [
 				purgecss({
-					content: [
-						'./src/**/*.svelte',
-						'./node_modules/svelte/*.js',
-					],
+					content: ['./src/**/*.svelte'],
+					whitelist: ['body'] 
 				}),
 			],
 			extensions: ['.sass', '.scss']

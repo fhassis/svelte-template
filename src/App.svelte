@@ -1,14 +1,27 @@
 <script lang="ts">
-	let name: string = 'World';
+	import './styles/bulma.scss';
 </script>
 
-<style>
-	p {
-		color:chocolate;
-	}
-</style>
+<section class="section">
+   <div class="container">
+	   <h1 class="title">
+		   <span style="color: blue">Hello</span> World
+	   </h1>
+	   <p class="subtitle" style="color: purple">
+		   Mi primer website con <strong>svelte + bulma + sass</strong>.
+	   </p>
+	   <p>
+		   <button class="button">
+		   Botón
+		   </button>
 
-<main class="container has-text-centered">
-	<h1 class="is-size-1">Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
+		   <button class="button is-primary">
+		   Botón primario
+		   </button>
+
+		   <button class="button is-warning">
+		   Advertencia
+		   </button>
+	   </p>
+   </div>
+</section>
